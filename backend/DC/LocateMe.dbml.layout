@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="LocateMe">
+  <DataContextMoniker Name="/LocateMeDataContext" />
+  <nestedChildShapes>
+    <classShape Id="b468e02d-57be-4beb-b0c2-f3b7e484e51a" absoluteBounds="0.5, 0.5, 2, 1.0961531575520833">
+      <DataClassMoniker Name="/LocateMeDataContext/locRegion" />
+      <nestedChildShapes>
+        <elementListCompartment Id="101cbfea-d135-4657-acca-4fdbb38a01bc" absoluteBounds="0.515, 0.96, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f32e5963-6338-4ace-bf07-0dcfce32833b" absoluteBounds="2.625, 0.5, 2, 1.4248478190104168">
+      <DataClassMoniker Name="/LocateMeDataContext/locCity" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8fe1c5a1-ba85-4564-be16-ed8dbda25477" absoluteBounds="2.6399999999999997, 0.96, 1.9700000000000002, 0.86484781901041674" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9497ed48-4e17-4ac7-b970-a5f60e98f9ef" absoluteBounds="4.75, 0.5, 2, 1.5891951497395831">
+      <DataClassMoniker Name="/LocateMeDataContext/locStreet" />
+      <nestedChildShapes>
+        <elementListCompartment Id="78a6cb77-b40d-4afe-82f6-51c89a2e20cd" absoluteBounds="4.765, 0.96, 1.9700000000000002, 1.0291951497395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

@@ -1,0 +1,81 @@
+﻿<html>
+<head>
+    <title>Таргетинг пользователей по всем субъектам России</title>
+    <script src="~/content/jQuery.min.js"></script>
+    <script src="~/content/jquery.locateme.js"></script>
+    <link href="~/content/jquery.locateme.css" rel="stylesheet" />
+    <link href="~/content/UI.css" rel="stylesheet" />
+</head>
+<script>
+    $(function () {
+        //включаем\выключаем выбор городов
+        var cityOnHandler = function (id) {
+                city.AjaxRequestParameters({ regionId: id });
+                city.Disable(false);
+            },
+            cityOffHandler = function (id) {
+                city.Disable(true);
+                street.Disable(true);
+            };
+
+        //включаем\выключаем выбор улиц
+        var streetOnHandler = function (id) {
+                street.AjaxRequestParameters({ cityId: id });
+                street.Disable(false);
+            },
+            streetOffHandler = function (id) {
+                street.Disable(true);
+            };
+
+        var region = new locateMe("uloc_region", "region", "Регион", "/region", null, cityOnHandler, cityOffHandler);
+        var city = new locateMe("uloc_city", "city", "Город (нас. пункт)", "/city", null, streetOnHandler, streetOffHandler).Disable(true);
+        var street = new locateMe("uloc_street", "street", "Улица", "/street").Disable(true);
+
+        $("input[type=button]").click(function () {
+            var info = $(".info"),
+                infoch = info.find("div");
+
+            if (region.isApplied) {
+                infoch.eq(0).html("Регион: <strong>" + region.Value().v + "</strong>, ID:" + region.Value().k);
+            }
+
+            if (city.isApplied) {
+                infoch.eq(1).html("Город: <strong>" + city.Value().v + "</strong>, ID:" + city.Value().k);
+            }
+
+            if (street.isApplied) {
+                infoch.eq(2).html("Улица: <strong>" + street.Value().v + "</strong>, ID:" + street.Value().k);
+            }
+
+            if (region.isApplied ||
+                city.isApplied ||
+                region.isApplied) {
+                info.show();
+            }
+            else info.hide();
+        });
+    });
+</script>
+<body style="font-family:Verdana;">
+    <div class="content">
+        <h1>Откуда вы</h1>
+        <div class="uloc">
+            <div class="uloc_region"></div>
+            <div class="uloc_city"></div>
+            <div class="uloc_street"></div>
+        </div>
+        <div class="buttons">
+            <input type="button" value="Готово">
+        </div>
+    </div>
+    <div class="info">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div class="text">
+
+    </div>
+</body>
+</html>

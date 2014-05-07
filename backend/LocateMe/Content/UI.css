@@ -1,0 +1,112 @@
+﻿h1
+{
+    border-bottom: 1px solid whitesmoke;
+    margin: 0;
+    padding: 10px 0 5px;
+    font-size: 17px;
+    color: #F49B14;
+    font-weight:normal;
+}
+
+body
+{
+    font:normal 13px Verdana;
+    color:#393939;
+}
+
+div.content
+{
+    width: 450px;
+    height: 285px;
+    margin: 50px auto;
+    padding: 10px 20px;
+    border: 1px solid #F49B14;
+    border-radius: 4px;
+      -moz-border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -khtml-border-radius: 4px;
+    box-shadow: 5px 5px 6px 0px rgba(92, 92, 92, 0.25);
+    -webkit-box-shadow:  5px 5px 6px 0px rgba(92, 92, 92, 0.25);
+    -moz-box-shadow:  5px 5px 6px 0px rgba(92, 92, 92, 0.25);
+
+    background:url(/content/bgr.jpg) no-repeat;
+}
+
+div.info
+{
+    margin: 20px auto;
+    border: 2px dashed #B8B8B8;
+    padding: 10px 15px;
+    width: 275px;
+    height: 70px;
+    display: none;
+}
+
+div.text
+{
+    margin: 20px auto;
+}
+
+
+div.buttons
+{
+    margin:30px 0 5px;
+}
+
+span.label
+{
+    display: block;
+    font-size: 11px;
+    color: #5F5F5F;
+    margin-top: 20px;
+}
+
+input[type=text]
+{
+    width: 100%;
+    border: 1px solid #DDD;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    border-radius: 3px;
+    padding: 5px 6px;
+    outline: none;
+    color: #1B1B1B;
+    font-size: 15px;
+    margin: 0;
+}
+
+input[type=text]:focus
+{
+    border-color: #F49B14;
+}
+
+
+input[type=text]:disabled,
+span.label:disabled
+{
+    opacity: 0.65;
+}
+
+.disabled
+{
+    opacity: 0.65;
+}
+
+input[type=button]
+{
+    padding: 4px 25px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid #FFC900;
+    background-image: -webkit-linear-gradient(top,#FFD53B,#FF851A);
+    background-image: -moz-linear-gradient(top,#FFD53B,#FF851A);
+    background-image: -ms-linear-gradient(top,#FFD53B,#FF851A);
+    background-image: -o-linear-gradient(top,#FFD53B,#FF851A);
+    background-image: linear-gradient(top,#ffd53b,#ff851a);
+    cursor: pointer;
+    color: #FFF;
+    font: bold 15px Arial;
+    text-shadow: 1px 1px 1px #C63;
+    outline: none;
+}
