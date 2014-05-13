@@ -129,6 +129,20 @@ var locateMe = function (wrapperName, fieldName, fieldLabel, url, urlData, apply
                 _this.SearchInput.val(arrayValue.substring(0, searchValueLength));
                 _this.SearchResultsTipId.val(arrayKey);
                 _this.SearchInputTip.val(arrayValue);
+<<<<<<< HEAD
+=======
+            }
+            else if (arr && arr.length == 0) {
+                if (_this.isApplied) {
+                    _this.SearchResultsTipId.val("");
+                    _this.SearchInputTip.val("");
+
+                    _this.isApplied = false;
+                    if (cancelHandler && typeof (cancelHandler) === "function") {
+                        cancelHandler();
+                    }
+                }
+>>>>>>> 5d7be9f8044f7b1685c9b323677d1be2d4de6c5a
             }
             else if (arr && arr.length == 0) {
                 if (_this.isApplied) {

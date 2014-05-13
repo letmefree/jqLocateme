@@ -78,7 +78,11 @@ namespace DP
                 foreach (var one in searchResults as List<locRegionDTO>)
                 {
 <<<<<<< HEAD
+<<<<<<< HEAD
                     var revertedText = IsStartWith(searchQuery, one.Region) ? one.Region : RevertText(searchQuery, one.Region);
+=======
+                    var revertedText = RevertText(searchQuery, one.Region);
+>>>>>>> 5d7be9f8044f7b1685c9b323677d1be2d4de6c5a
 =======
                     var revertedText = RevertText(searchQuery, one.Region);
 >>>>>>> 5d7be9f8044f7b1685c9b323677d1be2d4de6c5a

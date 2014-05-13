@@ -19,7 +19,11 @@ namespace LocateMe.Controllers
         public JsonResult Region(string searchquery)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             return Json(from i in Dataprovider.SearchRegions(searchquery, 5) select new { k = i.Id, v = i.Region });        
+=======
+            return Json(from i in Dataprovider.SearchRegions(searchquery, 15) select new { k = i.Id, v = i.Region });        
+>>>>>>> 5d7be9f8044f7b1685c9b323677d1be2d4de6c5a
 =======
             return Json(from i in Dataprovider.SearchRegions(searchquery, 15) select new { k = i.Id, v = i.Region });        
 >>>>>>> 5d7be9f8044f7b1685c9b323677d1be2d4de6c5a
