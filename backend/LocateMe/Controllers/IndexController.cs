@@ -3,6 +3,7 @@ using DP;
 using System;
 using System.Web.Mvc;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace LocateMe.Controllers
 {
@@ -17,7 +18,7 @@ namespace LocateMe.Controllers
         [HttpPost]
         public JsonResult Region(string searchquery)
         {
-            return Json(from i in Dataprovider.SearchRegions(searchquery, 5) select new { k = i.Id, v = i.Region });
+            return Json(from i in Dataprovider.SearchRegions(searchquery, 15) select new { k = i.Id, v = i.Region });        
         }
 
         [HttpPost]

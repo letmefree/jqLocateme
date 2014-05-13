@@ -3,6 +3,8 @@ using DC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace DP
 {
@@ -17,7 +19,9 @@ namespace DP
         {
             using (var dc = new LocateMeDataContext())
             {
-                return (from r in dc.locRegions where r.Region.StartsWith(query) select new locRegionDTO { Id = r.Id, Region = r.Region }).Take(rowsCount).ToList();
+                var splitter = query.Split(' ');
+                List<locRegionDTO> regions = (from r in dc.locRegions where r.Region.Contains(query) select new locRegionDTO { Id = r.Id, Region = r.Region }).ToList();
+                return ReversSearchResults(query, regions, rowsCount);
             }
         }
 
@@ -47,6 +51,84 @@ namespace DP
             {
                 return (from s in dc.locStreets where s.Street.StartsWith(query) && s.CityId == cityId select new locStreetDTO { Street = s.Street, Id = s.Id, StreetType = s.StreetType }).Take(rowsCount).ToList();
             }
+        }
+
+        /// <summary>
+        /// Универсальный метод для перестановки слов в результатах поиска - позволяет получать предсказуемый ответ при вводе "Башкорк..." (в БД как "Республика Башкоркостан"). Можно конечно поменять данные в БД, но это уменьшит универсальность и, возможную, достоверность базы
+        /// </summary>
+        /// <typeparam name="T">locRegionDTO (locCityDTO|locStreetsDTO)</typeparam>
+        /// <param name="searchQuery"></param>
+        /// <param name="searchResults"></param>
+        /// <param name="rowsCount"></param>
+        /// <returns></returns>
+        public static List<T> ReversSearchResults<T>(string searchQuery, List<T> searchResults, int rowsCount) where T : new()
+        {
+            Match match;
+
+            var value = string.Empty;
+            var regexpPattern = string.Format("\\b([а-я\\-]*?{0}\\S*)", searchQuery);
+            var indexer = new int();
+            string[] splitter;
+
+
+            if (typeof(T) == typeof(locRegionDTO))
+            {
+                var returnList = new List<locRegionDTO>();
+
+                foreach (var one in searchResults as List<locRegionDTO>)
+                {
+                    var revertedText = RevertText(searchQuery, one.Region);
+                    if (IsStartWith(searchQuery,revertedText))
+                    {
+                        if (indexer < rowsCount)
+                        {
+                            returnList.Add(new locRegionDTO
+                            {
+                                Id = one.Id,
+                                Region = revertedText,
+                                OriginalRegion = one.Region
+                            });
+                            indexer++;
+                        }
+                    }
+                }
+
+                return returnList as List<T>;
+            }
+
+            return null;
+        }
+
+        internal static string RevertText(string query, string rowValue)
+        {
+            var splitter = rowValue.Split(' ');
+            var val = new StringBuilder();
+
+            if (splitter.Length > 1)
+            {
+                foreach (var one in splitter)
+                {
+                    if (IsStartWith(query, one))
+                    {
+                        val.Insert(0, one.Trim());
+                        val.Insert(one.Length, " ");
+                    }
+                    else
+                    {
+                        val.Append(one.ToLower().Trim());
+                        val.Append(" ");
+                    }
+
+                }
+            }
+            else val.Append(splitter[0]);
+
+            return val.ToString().Trim();
+        }
+
+        internal static bool IsStartWith(string startString, string text)
+        {
+            return Regex.IsMatch(text, "^" + startString, RegexOptions.IgnoreCase);
         }
     }
 }

@@ -7,7 +7,7 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  * 
- *  Version: 06/05/2014 rc1
+ *  Version: 13/05/2014 rc2
  */
 var locateMe = function (wrapperName, fieldName, fieldLabel, url, urlData, applyHandler, cancelHandler) {
     var _this = this,
@@ -15,9 +15,9 @@ var locateMe = function (wrapperName, fieldName, fieldLabel, url, urlData, apply
 
     this.isApplied = false;
     this.SearchInputLabel = jQuery("<span>").addClass("label").attr("id", fieldName + "_label").html(fieldLabel);
-    this.SearchInput = jQuery("<input/>").addClass("input_search").attr("id", fieldName).attr("type", "text");
-    this.SearchInputTip = jQuery("<input/>").addClass("input_search_tip").attr("id", fieldName + "_tip").attr("type", "text");
-    this.SearchResultsTipId = jQuery("<input/>").attr("id", fieldName + "_tip_id").attr("type", "hidden");
+    this.SearchInput = jQuery("<input>").addClass("input_search").attr("id", fieldName).attr("type", "text");
+    this.SearchInputTip = jQuery("<input>").addClass("input_search_tip").attr("id", fieldName + "_tip").attr("type", "text").attr("disabled", "disabled");
+    this.SearchResultsTipId = jQuery("<input>").attr("id", fieldName + "_tip_id").attr("type", "hidden");
     this.SearchResults = jQuery("<div>").addClass("results").attr("id", fieldName + "_results");
     this.SearchUrl = url;
 
@@ -122,13 +122,24 @@ var locateMe = function (wrapperName, fieldName, fieldLabel, url, urlData, apply
                     .css("height", arr.length * 19).show();
             }
             else if (arr && arr.length == 1) {
-                var searchInputValue = _this.SearchInput.val().length,
+                var searchValueLength = _this.SearchInput.val().length,
                     arrayValue = arr[0].v,
-                    arrayKey = arr[0].k,
-                    tip = _this.SearchInput.val() + arrayValue.substring(searchInputValue, arrayValue.length);
+                    arrayKey = arr[0].k;
 
+                _this.SearchInput.val(arrayValue.substring(0, searchValueLength));
                 _this.SearchResultsTipId.val(arrayKey);
-                _this.SearchInputTip.val(tip);
+                _this.SearchInputTip.val(arrayValue);
+            }
+            else if (arr && arr.length == 0) {
+                if (_this.isApplied) {
+                    _this.SearchResultsTipId.val("");
+                    _this.SearchInputTip.val("");
+
+                    _this.isApplied = false;
+                    if (cancelHandler && typeof (cancelHandler) === "function") {
+                        cancelHandler();
+                    }
+                }
             }
         },
         resultsMove: function (direction) {
@@ -206,6 +217,15 @@ var locateMe = function (wrapperName, fieldName, fieldLabel, url, urlData, apply
             r.width += obj.css("border-right-width").replace("px", "") * 1;
 
             return r;
+        },
+        revertWords:function(text)
+        {
+            var splitter = text.split(/\s+/);
+            var value = "";
+            for(i = 0; i<splitter.length;i++)
+            {
+
+            }
         }
     };
 
@@ -246,6 +266,7 @@ var locateMe = function (wrapperName, fieldName, fieldLabel, url, urlData, apply
 
                     if (_this.isApplied) {
                         _this.isApplied = false;
+                        _this.SearchInputTip.val("");
                         _this.SearchResultsTipId.val("");
 
                         if (cancelHandler && typeof (cancelHandler) === "function") {
@@ -262,20 +283,25 @@ var locateMe = function (wrapperName, fieldName, fieldLabel, url, urlData, apply
                 else if (e.which == 39) {       //→
                     _methods.resultsApply();
                 }
-                else if (e.which == 9) {       //TAB
+                else if (e.which == 9 &&
+                    !_this.isApplied) {       //TAB
                     _methods.resultsApply();
                     return false;
                 }
-                else if (e.which == 13) {       //ENTER
-                    _methods.resultsApply();
+                else if (e.which == 13 &&
+                    !_this.isApplied) {       //ENTER
+                    _methods.resultsApply();                    
                 }
             })
             .keypress(function (e) {
                 var text = _this.SearchInput.val(),
                     pressedChar = String.fromCharCode(e.which || e.keyCode),
                     query = text + pressedChar;
-
-                _methods.retrieveResults(query);
+                
+                //prevent [ENTER] keypress
+                if (e.which != 13) {
+                    _methods.retrieveResults(query);
+                }
             });
     }
 
